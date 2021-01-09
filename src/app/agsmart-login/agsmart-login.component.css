@@ -1,0 +1,9 @@
+.mainContent{
+    position:absolute; height:100%; width:100%;
+    display: table;
+    display: table-cell;
+    vertical-align: middle;
+    text-align:center;
+    top: 30%;
+    color: #202020;
+}

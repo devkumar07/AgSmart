@@ -1,0 +1,30 @@
+.navbar-home{
+    padding: 20px;
+}
+.backgroundHome{
+    background: url(../../assets/test.jpg) no-repeat center center fixed;
+    height: 100vh;
+    width: 100%;
+    
+}
+.title{
+    position:absolute; height:100%; width:100%;
+    display: table;
+    font-size: 200px;
+    display: table-cell;
+    vertical-align: middle;
+    text-align:center;
+    top: 18%;
+    color: #202020;
+}
+.subtitle{
+    position:absolute; height:100%; width:100%;
+    display: table;
+    font-size: 25px;
+    display: table-cell;
+    vertical-align: middle;
+    text-align:center;
+    top: 41%;
+    color: #202020;
+}
+

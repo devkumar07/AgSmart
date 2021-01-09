@@ -1,0 +1,24 @@
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Field</th>
+        <th scope="col">Crop</th>
+        <th scope="col">Activity Name</th>
+        <th scope="col">Tractor</th>
+        <th scope="col">Updated At</th>
+        <th scope="col">Area</th>
+        <th scope="col">Input Hours</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let m of fields; let i = index">
+        <td *ngIf="m.attributes.activity_fields[0].farm_name == 'Merced College-Large Blocks' && m.attributes.activity_fields[0].crops.length != 0">{{m.attributes.activity_fields[0].field_name}}</td>
+        <td *ngIf="m.attributes.activity_fields[0].farm_name == 'Merced College-Large Blocks' && m.attributes.activity_fields[0].crops.length != 0">{{m.attributes.activity_fields[0].crops[0].crop_name}}</td>
+        <td *ngIf="m.attributes.activity_fields[0].farm_name == 'Merced College-Large Blocks' && m.attributes.activity_fields[0].crops.length != 0">{{m.attributes.title}}</td>
+        <td *ngIf="m.attributes.activity_fields[0].farm_name == 'Merced College-Large Blocks' && m.attributes.activity_fields[0].crops.length != 0">N/A</td>
+        <td *ngIf="m.attributes.activity_fields[0].farm_name == 'Merced College-Large Blocks' && m.attributes.activity_fields[0].crops.length != 0">{{m.attributes.updated_at}}</td>
+        <td *ngIf="m.attributes.activity_fields[0].farm_name == 'Merced College-Large Blocks' && m.attributes.activity_fields[0].crops.length != 0">{{m.attributes.area}}</td>
+        <td *ngIf="m.attributes.activity_fields[0].farm_name == 'Merced College-Large Blocks' && m.attributes.activity_fields[0].crops.length != 0">{{m.attributes.activity_inputs[0].total_time}}</td>
+      </tr>
+    </tbody>
+  </table>

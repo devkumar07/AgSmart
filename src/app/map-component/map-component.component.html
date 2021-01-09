@@ -1,0 +1,31 @@
+
+<div class="sidenav">
+  <a routerLink ="/dashboard" (click) = "defaultView()">Map</a>
+  <a (click) = "showLoginService()">Services</a>
+  <a href="#analytics">Analytics</a>
+  <a href="#practices">Practices</a>
+</div>
+<div class="main">
+  <h3>Welcome {{ name }}</h3>
+  <agm-map *ngIf = "isActive == true" [zoom]= "z" [latitude]="lat" [longitude]="lng">
+    <agm-marker [latitude]="lat" [longitude]="lng">
+      <agm-info-window><b>My Home Location</b>
+      </agm-info-window>
+    </agm-marker>
+    <agm-marker *ngFor="let m of agWorldFarms; let i = index" [latitude]="m.attributes.location.latitude" [longitude]= "m.attributes.location.longitude">
+      <agm-info-window><b>ID: </b>{{m.id}}<br>
+        <b>Type: </b> {{m.type}}<br>
+        <b>Name: </b> {{m.attributes.name}}<br>
+        <b>Description: </b> {{m.attributes.description}}<br>
+        <b>Latitude: </b> {{m.attributes.location.latitude}}<br>
+        <b>Longitude: </b> {{m.attributes.location.longitude}}
+      </agm-info-window>
+  </agm-marker>
+  </agm-map>
+  <agsmart-login *ngIf = "isActiveLogin == true"></agsmart-login>
+  <list-view *ngIf = "isActiveListView == true"></list-view>
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <button routerLink ="/dashboard" (click) = "defaultView()" type="button">Map View</button>
+    <button (click) = "showListView()" type="button">List View</button>
+  </div>
+</div>
