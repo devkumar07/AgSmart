@@ -7,7 +7,7 @@
 </div>
 <div class="main">
   <h3>Welcome {{ name }}</h3>
-  <agm-map *ngIf = "isActive == true" [zoom]= "z" [latitude]="lat" [longitude]="lng">
+  <agm-map *ngIf = "isActive == true" [zoom]= "z" [latitude]="lat" [longitude]="lng" [fullscreenControl]='true' [mapTypeControl]='true'>
     <agm-marker [latitude]="lat" [longitude]="lng">
       <agm-info-window><b>My Home Location</b>
       </agm-info-window>
