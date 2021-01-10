@@ -66,11 +66,26 @@ export class MapComponentComponent implements OnInit {
   defaultView(){
     this.makeAllFalse();
     this.isActive = true;
-    let temp = []
+    /*let temp = []
     this.data.farmData.subscribe(message => temp = message[0])
+    alert(temp)
     this.data.farmData.subscribe(message => this.z = message[1])
-    if(temp.length!=0){
+    if(temp != undefined){
       this.agWorldFarms = temp
-    }
+    }*/
+    this.http.get(this.url+'/find_session')
+      .subscribe(response => {
+        let json_data = response.json()
+        if (json_data['code'] == 'SUCCESS'){
+          this.name = json_data['name']
+          this.geocodeAddress(json_data['address'])
+          this.agWorldFarms = [json_data['response_farms']]
+          this.z = json_data['zoom']
+        }
+        else{
+          this.data.currentMessage.subscribe(message => this.name = message)
+          this.geocodeAddress(this.address)
+        }
+      })
   }
 }

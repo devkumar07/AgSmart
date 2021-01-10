@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { CheckboxControlValueAccessor } from '@angular/forms';
 import {Http} from '@angular/http'
 import { Router } from '@angular/router';
 import { DataService } from "../data.service";
@@ -20,7 +21,7 @@ export class AgsmartLoginComponent implements OnInit {
   }
   submit(param){
     if(this.isAgsmart == true){
-      let post = {username: param.value.email, password: param.value.password}
+      let post = {username: param.value.email, password: param.value.password, checkbox: param.value.checkbox}
       this.http.post(this.url+'/login_validation',post)
       .subscribe(response => {
         let json_data = response.json()
@@ -35,7 +36,7 @@ export class AgsmartLoginComponent implements OnInit {
       })
     }
     else{
-      let post = {username: param.value.email, password: param.value.password}
+      let post = {username: param.value.email, password: param.value.password, checkbox: param.value.checkbox}
       this.http.post(this.url+'/verify_agworld_login',post)
       .subscribe(response => {
         let json_data = response.json()

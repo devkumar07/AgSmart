@@ -56,12 +56,18 @@ def get_session():
 def verify_login_creds():
     global username
     global password
+    global agworldUsername
+    global agworldPassword
     if request.method == 'POST':
         initializeDB()
         data = request.get_json()
         query = {"username": str(data['username'])}
         result = mycol.find(query)
+        result_json = mycol.find_one(query)
         print(result)
+        if 'agworldUsername' in result_json:
+            agworldUsername = result_json['agworldUsername']
+            agworldPassword = result_json['agworldPassword']
         if result.count() !=0:
             if str(result[0]['password']) == str(data['password']) and str(result[0]['username']) == str(data['username']):
                 username = data['username']
@@ -76,10 +82,13 @@ def verify_agworld_login():
     if request.method == 'POST':
         apikey = {}
         data = request.get_json()
+        #print(json.dumps(data))
         with open('./app/key.json') as f:
             apikey = json.load(f)
         response = requests.get('https://us.agworld.co/user_api/v1/fields/?api_token='+apikey['agworldAPI'],auth=HTTPBasicAuth(data['username'], data['password']))
         if response.status_code == 200:
+            if data['checkbox'] == True:
+                mycol.update_one({"username": username}, {'$set':{"agworldUsername": agworldUsername, "agworldPassword": agworldPassword}})
             agworldUsername = data['username']
             agworldPassword = data['password']
             return json.dumps({"msg":"200", "response":"SUCCESS"})
@@ -92,10 +101,10 @@ def get_agworldFarms():
             apikey = json.load(f) #farms/117513/
         headers = {'Content-Type': 'application/vnd.api+json','Accept': 'application/vnd.api+json','Api-Token':apikey['agworldAPI']}
         response = requests.get('https://us.agworld.co/user_api/v1/farms/120061',headers = headers,auth=HTTPBasicAuth(agworldUsername, agworldPassword))
-        print(response.status_code)
+        #print(response.status_code)
         t = response.json()
         t = t['data']
-        print(t)
+        #print(t)
         if response.status_code == 200:
             return json.dumps({"msg":"200", "result":"SUCCESS", "response_farms": t, "zoom": 7})
     return json.dumps({"msg":"404"})
@@ -112,7 +121,7 @@ def get_agworldFields():
         result1 = response.json()
         result['data'] = result['data'] + result1['data']
         result = result['data']
-        print(json.dumps(result))
+        #print(json.dumps(result))
         if response.status_code == 200:
             return json.dumps({"msg":"200", "result":"SUCCESS", "response_fields":result, "zoom": 7})
     return json.dumps({"msg":"404"})
