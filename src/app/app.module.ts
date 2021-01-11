@@ -10,6 +10,8 @@ import { AgsmartLoginComponent } from './agsmart-login/agsmart-login.component';
 import { HttpModule } from '@angular/http';
 import { DataService } from './data.service';
 import { ListViewComponent } from './list-view/list-view.component';
+import { DataTablesModule } from 'angular-datatables';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { ListViewComponent } from './list-view/list-view.component';
     BrowserModule,
     FormsModule,
     HttpModule,
+    HttpClientModule,
+    DataTablesModule,
     RouterModule.forRoot([
       {
         path: '', 

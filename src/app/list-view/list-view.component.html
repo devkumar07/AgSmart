@@ -1,4 +1,4 @@
-<table class="table">
+<table class="row-border hover" *ngIf="fields" datatable [dtOptions]="dtOptions">
     <thead>
       <tr>
         <th scope="col">Field</th>
@@ -11,14 +11,14 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let m of fields; let i = index">
-        <td *ngIf="m.attributes.activity_fields[0].farm_name == 'Merced College-Large Blocks' && m.attributes.activity_fields[0].crops.length != 0">{{m.attributes.activity_fields[0].field_name}}</td>
-        <td *ngIf="m.attributes.activity_fields[0].farm_name == 'Merced College-Large Blocks' && m.attributes.activity_fields[0].crops.length != 0">{{m.attributes.activity_fields[0].crops[0].crop_name}}</td>
-        <td *ngIf="m.attributes.activity_fields[0].farm_name == 'Merced College-Large Blocks' && m.attributes.activity_fields[0].crops.length != 0">{{m.attributes.title}}</td>
-        <td *ngIf="m.attributes.activity_fields[0].farm_name == 'Merced College-Large Blocks' && m.attributes.activity_fields[0].crops.length != 0">N/A</td>
-        <td *ngIf="m.attributes.activity_fields[0].farm_name == 'Merced College-Large Blocks' && m.attributes.activity_fields[0].crops.length != 0">{{m.attributes.updated_at}}</td>
-        <td *ngIf="m.attributes.activity_fields[0].farm_name == 'Merced College-Large Blocks' && m.attributes.activity_fields[0].crops.length != 0">{{m.attributes.area}}</td>
-        <td *ngIf="m.attributes.activity_fields[0].farm_name == 'Merced College-Large Blocks' && m.attributes.activity_fields[0].crops.length != 0">{{m.attributes.activity_inputs[0].total_time}}</td>
+      <tr *ngFor="let m of fields">
+        <td >{{m.attributes.activity_fields[0].field_name}}</td>
+        <td >{{m.attributes.activity_fields[0].crops[0].crop_name}}</td>
+        <td >{{m.attributes.title}}</td>
+        <td >N/A</td>
+        <td >{{m.attributes.updated_at}}</td>
+        <td >{{m.attributes.area}}</td>
+        <td >{{m.attributes.activity_inputs[0].total_time}}</td>
       </tr>
     </tbody>
   </table>

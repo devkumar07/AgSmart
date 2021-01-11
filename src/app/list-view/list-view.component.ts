@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Http } from '@angular/http';
 import { DataService } from '../data.service';
 
@@ -9,26 +9,57 @@ import { DataService } from '../data.service';
 })
 export class ListViewComponent implements OnInit {
 
-  fields = []
+  fields;
   private url = 'http://127.0.0.1:5000'
+  title = 'datatables';
+  dtOptions: DataTables.Settings = {};
   constructor(private data: DataService, private http: Http) { }
 
   ngOnInit(): void {
     let temp = []
+    let filtered = []
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      processing: true
+    };
+  
+    this.http.get(this.url+'/getagworldFields')
+      .subscribe(response => {
+        let json_data = response.json()
+        if (json_data['result'] == 'SUCCESS'){
+          temp = json_data['response_fields']
+          for (var i=0; i<temp.length; i++) {
+            if(temp[i].attributes.activity_fields[0].farm_name == 'Merced College-Large Blocks' && temp[i].attributes.activity_fields[0].crops.length != 0){
+              filtered.push(temp[i])
+            }
+          }
+          //alert(JSON.stringify(filtered))
+          this.fields = filtered
+        }
+        else{
+          alert('failed')
+        }
+    });
     //this.data.fieldData.subscribe(message => this.fields = temp)
-    if(this.fields.length == 0){
+    /*if(this.fields.length == 0){
       this.http.get(this.url+'/getagworldFields')
       .subscribe(response => {
         let json_data = response.json()
         if (json_data['result'] == 'SUCCESS'){
-          this.fields = json_data['response_fields']
+          temp = json_data['response_fields']
+          for (var i=0; i<temp.length; i++) {
+            if(temp[i].attributes.activity_fields[0].farm_name == 'Merced College-Large Blocks' && temp[i].attributes.activity_fields[0].crops.length != 0){
+              filtered.push(temp[i])
+            }
+          }
+          this.fields = filtered
           //alert(JSON.stringify(json_data['response_fields']))
         }
         else{
           alert("failed")
         }
       })
-    }
+    }*/
   }
-
 }
