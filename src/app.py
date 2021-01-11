@@ -98,10 +98,9 @@ def verify_agworld_login():
 def get_agworldFarms():
     if request.method == 'GET':
         with open('./app/key.json') as f:
-            apikey = json.load(f) #farms/117513/
+            apikey = json.load(f) 
         headers = {'Content-Type': 'application/vnd.api+json','Accept': 'application/vnd.api+json','Api-Token':apikey['agworldAPI']}
         response = requests.get('https://us.agworld.co/user_api/v1/farms/120061',headers = headers,auth=HTTPBasicAuth(agworldUsername, agworldPassword))
-        #print(response.status_code)
         t = response.json()
         t = t['data']
         #print(t)
