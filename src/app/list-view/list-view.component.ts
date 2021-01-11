@@ -41,25 +41,5 @@ export class ListViewComponent implements OnInit {
           alert('failed')
         }
     });
-    //this.data.fieldData.subscribe(message => this.fields = temp)
-    /*if(this.fields.length == 0){
-      this.http.get(this.url+'/getagworldFields')
-      .subscribe(response => {
-        let json_data = response.json()
-        if (json_data['result'] == 'SUCCESS'){
-          temp = json_data['response_fields']
-          for (var i=0; i<temp.length; i++) {
-            if(temp[i].attributes.activity_fields[0].farm_name == 'Merced College-Large Blocks' && temp[i].attributes.activity_fields[0].crops.length != 0){
-              filtered.push(temp[i])
-            }
-          }
-          this.fields = filtered
-          //alert(JSON.stringify(json_data['response_fields']))
-        }
-        else{
-          alert("failed")
-        }
-      })
-    }*/
   }
 }
