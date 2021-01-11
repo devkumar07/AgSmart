@@ -12,6 +12,7 @@ import { DataService } from './data.service';
 import { ListViewComponent } from './list-view/list-view.component';
 import { DataTablesModule } from 'angular-datatables';
 import { HttpClientModule } from '@angular/common/http';
+import apiKeys from './key.json';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,7 @@ import { HttpClientModule } from '@angular/common/http';
       }
     ]),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDaCbpln35NftchaoxdBJ_tusL5rg99hVc'
+      apiKey: apiKeys['mapsAPI']
     })
   ],
   providers: [DataService],
