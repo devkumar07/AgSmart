@@ -27,5 +27,6 @@
   <div class="d-grid gap-2 d-md-flex justify-content-md-end">
     <button routerLink ="/dashboard" (click) = "defaultView()" type="button">Map View</button>
     <button (click) = "showListView()" type="button">List View</button>
+    <input type="file" (change)="onFileChange($event)" multiple="false" />
   </div>
 </div>

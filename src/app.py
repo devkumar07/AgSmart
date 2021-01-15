@@ -126,6 +126,13 @@ def get_agworldFields():
             return json.dumps({"msg":"200", "result":"SUCCESS", "response_fields":result, "zoom": 7})
     return json.dumps({"msg":"404"})
 
+@app.route('/file_data_upload', methods = ['GET', 'POST'])
+def file_data_upload():
+    if request.method == 'POST':
+        data = request.get_json()
+        mycol.update_one({"username": username}, {'$set':{"water in gallons": data['dataFromExcel']}})
+        return json.dumps({"msg":"200", "result":"SUCCESS"})
+    return json.dumps({"msg":"400", "result":"FAILED"})
 @app.after_request
 def add_header(r):
     """

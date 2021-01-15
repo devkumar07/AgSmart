@@ -3,6 +3,8 @@ import { DataService } from '../data.service';
 import {Http} from '@angular/http'
 import { Router } from '@angular/router';
 import apiKeys from '../key.json'
+import * as XLSX from 'xlsx';
+
 @Component({
   selector: 'map-component',
   templateUrl: './map-component.component.html',
@@ -15,6 +17,7 @@ export class MapComponentComponent implements OnInit {
   isActive = true
   isActiveLogin = false
   isActiveListView = false
+  import_data: [][]
   agWorldFarms = []
   z = 17
   lat = 51.678418;
@@ -87,5 +90,41 @@ export class MapComponentComponent implements OnInit {
           this.geocodeAddress(this.address)
         }
       })
+  }
+  onFileChange(evt: any) {
+    const target : DataTransfer =  <DataTransfer>(evt.target);
+    if (target.files.length !== 1) throw new Error('Cannot use multiple files');
+
+    const reader: FileReader = new FileReader();
+
+    reader.onload = (e: any) => {
+      const bstr: string = e.target.result;
+
+      const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
+
+      const wsname : string = wb.SheetNames[0];
+
+      const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+
+      //console.log(ws);
+
+      this.import_data = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
+
+      console.log(this.import_data);
+
+      let x = this.import_data.slice(1);
+      console.log(x);
+      let post = {dataFromExcel: this.import_data}
+      this.http.post(this.url+'/file_data_upload',post)
+      .subscribe(response => {
+        let json_data = response.json()
+        if (json_data['result'] == 'SUCCESS'){
+          alert("File uploaded Successfully")
+        }
+      })
+    };
+
+    reader.readAsBinaryString(target.files[0]);
+
   }
 }
