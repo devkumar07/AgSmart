@@ -1,24 +1,26 @@
-<table class="row-border hover" *ngIf="fields" datatable [dtOptions]="dtOptions">
-    <thead>
-      <tr>
-        <th scope="col">Field</th>
-        <th scope="col">Crop</th>
-        <th scope="col">Activity Name</th>
-        <th scope="col">Tractor</th>
-        <th scope="col">Updated At</th>
-        <th scope="col">Area</th>
-        <th scope="col">Input Hours</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let m of fields">
-        <td >{{m.attributes.activity_fields[0].field_name}}</td>
-        <td >{{m.attributes.activity_fields[0].crops[0].crop_name}}</td>
-        <td >{{m.attributes.title}}</td>
-        <td >N/A</td>
-        <td >{{m.attributes.updated_at}}</td>
-        <td >{{m.attributes.area}}</td>
-        <td >{{m.attributes.activity_inputs[0].total_time}}</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="list-view">
+  <table class="row-border hover" *ngIf="fields" datatable [dtOptions]="dtOptions">
+      <thead>
+        <tr>
+          <th scope="col">Field</th>
+          <th scope="col">Crop</th>
+          <th scope="col">Activity Name</th>
+          <th scope="col">Tractor</th>
+          <th scope="col">Updated At</th>
+          <th scope="col">Area</th>
+          <th scope="col">Input Hours</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let m of fields">
+          <td >{{m.attributes.activity_fields[0].field_name}}</td>
+          <td >{{m.attributes.activity_fields[0].crops[0].crop_name}}</td>
+          <td >{{m.attributes.title}}</td>
+          <td >N/A</td>
+          <td >{{m.attributes.updated_at}}</td>
+          <td >{{m.attributes.area}}</td>
+          <td >{{m.attributes.activity_inputs[0].total_time}}</td>
+        </tr>
+      </tbody>
+    </table>
+</div>
