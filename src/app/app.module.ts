@@ -17,10 +17,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatTableModule } from '@angular/material/table' 
 import { MatPaginatorModule } from '@angular/material/paginator';
-import {MatTableFilter, MatTableFilterModule} from 'mat-table-filter'
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import {MatTableFilterModule} from 'mat-table-filter'
 import { MatNativeDateModule } from '@angular/material/core';
-import {FormGroup,ReactiveFormsModule } from '@angular/forms';
+import {ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule} from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';

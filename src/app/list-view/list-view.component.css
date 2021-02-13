@@ -23,6 +23,11 @@
         }
     }
 }
+
+.mat-header-cell{
+  font-size: 20px;
+  color: black;
+}
 .mat-form-field {
     font-size: 14px;
     width: 100%;

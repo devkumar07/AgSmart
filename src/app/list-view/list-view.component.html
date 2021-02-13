@@ -1,6 +1,9 @@
 <div class="list-view">
   <form class="date-block" [formGroup]="filterForm">
     <div class="date-block__list">
+      <h2>Date Range: </h2>
+    </div>
+    <div class="date-block__list">
       <mat-form-field>
         <input matInput 
           [matDatepicker]="fromDate" 
@@ -29,42 +32,78 @@
   
     <!-- Position Column -->
     <ng-container matColumnDef="Field">
-      <th mat-header-cell *matHeaderCellDef> Field </th>
+      <th mat-header-cell *matHeaderCellDef> 
+        Field 
+        <mat-form-field class="filter" floatLabel="never">
+          <mat-label>Search</mat-label>
+          <input matInput [formControl]="fieldFilter">
+        </mat-form-field> 
+      </th>
       <td mat-cell *matCellDef="let item"> {{item.field}} </td>
     </ng-container>
   
     <!-- Name Column -->
     <ng-container matColumnDef="Crop">
-      <th mat-header-cell *matHeaderCellDef> Crop </th>
+      <th mat-header-cell *matHeaderCellDef> 
+        Crop 
+        <mat-form-field class="filter" floatLabel="never">
+          <mat-label>Search</mat-label>
+          <input matInput [formControl]="cropFilter">
+        </mat-form-field>
+      </th>
       <td mat-cell *matCellDef="let item"> {{item.crop}} </td>
     </ng-container>
   
     <!-- Weight Column -->
     <ng-container matColumnDef="Activity Name">
-      <th mat-header-cell *matHeaderCellDef> Activity </th>
+      <th mat-header-cell *matHeaderCellDef> 
+        Activity 
+        <mat-form-field class="filter" floatLabel="never">
+          <mat-label>Search</mat-label>
+          <input matInput [formControl]="activityFilter">
+        </mat-form-field>
+      </th>
       <td mat-cell *matCellDef="let item"> {{item.activity}} </td>
     </ng-container>
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="Last updated">
-      <th mat-header-cell *matHeaderCellDef> Last Updated </th>
+      <th mat-header-cell *matHeaderCellDef> 
+        Last Updated 
+        <mat-form-field class="filter" floatLabel="never">
+          <mat-label>Search</mat-label>
+          <input matInput [formControl]="updatedFilter">
+        </mat-form-field>
+      </th>
       <td mat-cell *matCellDef="let item"> {{item.updated |  date:'MM/dd/yyyy'}} </td>
     </ng-container>
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="Area">
-      <th mat-header-cell *matHeaderCellDef> Area </th>
+      <th mat-header-cell *matHeaderCellDef> 
+        Area 
+        <mat-form-field class="filter" floatLabel="never">
+          <mat-label>Search</mat-label>
+          <input matInput [formControl]="areaFilter">
+        </mat-form-field>
+      </th>
       <td mat-cell *matCellDef="let item"> {{item.area}} </td>
     </ng-container>
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="Input Hours">
-      <th mat-header-cell *matHeaderCellDef> Hours </th>
+      <th mat-header-cell *matHeaderCellDef> 
+        Hours 
+        <mat-form-field class="filter" floatLabel="never">
+          <mat-label>Search</mat-label>
+          <input matInput [formControl]="hoursFilter">
+        </mat-form-field>
+      </th>
       <td mat-cell *matCellDef="let item"> {{item.hours}} </td>
     </ng-container>
   
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
   </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>
