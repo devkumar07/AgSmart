@@ -13,7 +13,17 @@ import { ListViewComponent } from './list-view/list-view.component';
 import { DataTablesModule } from 'angular-datatables';
 import { HttpClientModule } from '@angular/common/http';
 import apiKeys from './key.json';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatTableModule } from '@angular/material/table' 
+import { MatPaginatorModule } from '@angular/material/paginator';
+import {MatTableFilter, MatTableFilterModule} from 'mat-table-filter'
+import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import { MatNativeDateModule } from '@angular/material/core';
+import {FormGroup,ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule} from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,9 +35,18 @@ import apiKeys from './key.json';
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     HttpClientModule,
     DataTablesModule,
+    MatSliderModule,
+    MatDatepickerModule,
+    MatTableModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+    MatPaginatorModule,
+    MatTableFilterModule,
     RouterModule.forRoot([
       {
         path: '', 
@@ -44,7 +63,8 @@ import apiKeys from './key.json';
     ]),
     AgmCoreModule.forRoot({
       apiKey: apiKeys['mapsAPI']
-    })
+    }),
+    BrowserAnimationsModule
   ],
   providers: [DataService],
   bootstrap: [AppComponent]
