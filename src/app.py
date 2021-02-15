@@ -119,7 +119,11 @@ def get_agworldFields():
         result = response.json()
         response = requests.get('https://us.agworld.co/user_api/v1/activities?filter[name]=Discing&page[size]=100',headers = headers,auth=HTTPBasicAuth(agworldUsername, agworldPassword))
         result1 = response.json()
-        result['data'] = result['data'] + result1['data']
+        response = requests.get('https://us.agworld.co/user_api/v1/activities?filter[name]=Open+Drains&page[size]=100',headers = headers,auth=HTTPBasicAuth(agworldUsername, agworldPassword))
+        result2 = response.json()
+        response = requests.get('https://us.agworld.co/user_api/v1/activities?filter[name]=Make+Borders&page[size]=100',headers = headers,auth=HTTPBasicAuth(agworldUsername, agworldPassword))
+        result3 = response.json()
+        result['data'] = result['data'] + result1['data'] + result2['data'] + result3['data']
         result = result['data']
         #print(json.dumps(result))
         if response.status_code == 200:
