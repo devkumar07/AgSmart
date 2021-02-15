@@ -7,7 +7,7 @@
       <mat-form-field>
         <input matInput 
           [matDatepicker]="fromDate" 
-          placeholder="From Date" 
+          placeholder="After" 
           formControlName="fromDate">
         <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
         <mat-datepicker #fromDate></mat-datepicker>
@@ -17,7 +17,7 @@
       <mat-form-field>
         <input matInput 
           [matDatepicker]="toDate" 
-          placeholder="To Date" 
+          placeholder="Before" 
           formControlName="toDate">
         <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
         <mat-datepicker #toDate></mat-datepicker>

@@ -61,7 +61,7 @@ export class ListViewComponent implements OnInit {
       return data.field.toLowerCase().indexOf(searchTerms.fieldFilter) !== -1
         && data.crop.toString().toLowerCase().indexOf(searchTerms.cropFilter) !== -1
         && data.activity.toLowerCase().indexOf(searchTerms.activityFilter) !== -1
-        && data.updated.toLowerCase().indexOf(searchTerms.updatedFilter) !== -1
+        //&& data.updated.toLowerCase().indexOf(searchTerms.updatedFilter) !== -1
         && data.area.toLowerCase().indexOf(searchTerms.areaFilter) !== -1
         && data.hours.toLowerCase().indexOf(searchTerms.hoursFilter) !== -1;
     }
