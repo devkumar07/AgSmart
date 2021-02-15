@@ -19,6 +19,7 @@ export class MapComponentComponent implements OnInit {
   isActiveListView = false
   import_data: [][]
   agWorldFarms = []
+  searchFields = 0
   z = 17
   lat = 51.678418;
   lng = 7.809007;
@@ -41,6 +42,13 @@ export class MapComponentComponent implements OnInit {
           this.geocodeAddress(this.address)
         }
       })
+  }
+  createRange(){
+    var items: number[] = [];
+    for(var i = 1; i <= this.searchFields; i++){
+       items.push(i);
+    }
+    return items;
   }
   geocodeAddress(location:string){
     const address = location
@@ -126,5 +134,13 @@ export class MapComponentComponent implements OnInit {
 
     reader.readAsBinaryString(target.files[0]);
 
+  }
+  
+  increaseSearch(){
+    this.searchFields = this.searchFields + 1
+  }
+
+  decreaseSearch(){
+    this.searchFields = this.searchFields - 1
   }
 }

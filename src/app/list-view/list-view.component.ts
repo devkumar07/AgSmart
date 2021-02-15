@@ -77,7 +77,7 @@ export class ListViewComponent implements OnInit {
         let json_data = response.json()
         if (json_data['result'] == 'SUCCESS'){
           temp = json_data['response_fields']
-          alert(JSON.stringify(temp))
+          //alert(JSON.stringify(temp))
           for (var i=0; i<temp.length; i++) {
             for(var j = 0; j < temp[i].attributes.activity_fields.length; j++){
               if(temp[i].attributes.activity_fields[0].farm_name == 'Merced College-Large Blocks' && temp[i].attributes.activity_fields[0].crops.length != 0){
@@ -106,7 +106,6 @@ export class ListViewComponent implements OnInit {
               }
             }
           }
-          alert(filtered.length)
           this.fields = filtered
           this.dataSource = new MatTableDataSource(filtered);
           this.dataSource.filterPredicate = this.createFilter();

@@ -78,7 +78,13 @@
   <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="padding: 20px;">
     <button routerLink ="/dashboard" (click) = "defaultView()" type="button">Map View</button>
     <button (click) = "showListView()" type="button">List View</button>
+    <!---
     <input type="file" (change)="onFileChange($event)" multiple="false" />
+    -->
+  </div>
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="padding: 20px;" *ngIf = "isActiveListView == true">
+    <button (click) = "increaseSearch()" type="button">Create New Search</button>
+    <button (click) = "decreaseSearch()" type="button">Remove Search</button>
   </div>
   <agm-map *ngIf = "isActive == true" [zoom]= "z" [latitude]="lat" [longitude]="lng" [fullscreenControl]='true' [mapTypeId]="'hybrid'" [mapTypeControl]='true'>
     <agm-marker [latitude]="lat" [longitude]="lng">
@@ -97,5 +103,8 @@
   </agm-map>
   <agsmart-login *ngIf = "isActiveLogin == true"></agsmart-login>
   <list-view *ngIf = "isActiveListView == true"></list-view>
-  <list-view *ngIf = "isActiveListView == true"></list-view>
+  <div class = "table" *ngFor = "let item of createRange()">
+    <list-view *ngIf = "isActiveListView == true"></list-view>
+  </div>
+
 </div>
