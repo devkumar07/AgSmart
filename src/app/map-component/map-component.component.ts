@@ -24,6 +24,10 @@ export class MapComponentComponent implements OnInit {
   lat = 51.678418;
   lng = 7.809007;
   private url = 'http://127.0.0.1:5000'
+  pointList: { lat: number; lng: number }[] = [];
+  drawingManager: any;
+  selectedShape: any;
+  selectedArea = 0;
   constructor(private http: Http, private router: Router,private data: DataService) { }
 
   ngOnInit(): void {
@@ -43,6 +47,9 @@ export class MapComponentComponent implements OnInit {
         }
       })
   }
+  onMapReady(map) {
+    this.initDrawingManager(map);
+  }
   createRange(){
     var items: number[] = [];
     for(var i = 1; i <= this.searchFields; i++){
@@ -53,7 +60,7 @@ export class MapComponentComponent implements OnInit {
   geocodeAddress(location:string){
     const address = location
     this.http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + 
-              address + '&key='+apiKeys['mapsAPI']).subscribe(response =>{
+              address + '&key='+apiKeys['mapsAPI']+"&libraries=drawing").subscribe(response =>{
                 this.temp = JSON.stringify(response.json())
                 let res = response.json()
                 this.lat = res['results'][0].geometry.location.lat
@@ -142,5 +149,106 @@ export class MapComponentComponent implements OnInit {
 
   decreaseSearch(){
     this.searchFields = this.searchFields - 1
+  }
+
+  initDrawingManager = (map: any) => {
+    const self = this;
+    const options = {
+      drawingControl: true,
+      drawingControlOptions: {
+        drawingModes: [
+          google.maps.drawing.OverlayType.MARKER,
+          google.maps.drawing.OverlayType.CIRCLE,
+          google.maps.drawing.OverlayType.POLYGON,
+          google.maps.drawing.OverlayType.POLYLINE,
+          google.maps.drawing.OverlayType.RECTANGLE,
+        ],
+      },
+      polygonOptions: {
+        draggable: true,
+        editable: true,
+      },
+      drawingMode: google.maps.drawing.OverlayType.POLYGON
+    };
+    this.drawingManager = new google.maps.drawing.DrawingManager(options);
+    this.drawingManager.setMap(map);
+    google.maps.event.addListener(
+      this.drawingManager,
+      'overlaycomplete',
+      (event) => {
+        if (event.type === google.maps.drawing.OverlayType.POLYGON) {
+          const paths = event.overlay.getPaths();
+          for (let p = 0; p < paths.getLength(); p++) {
+            google.maps.event.addListener(
+              paths.getAt(p),
+              'set_at',
+              () => {
+                if (!event.overlay.drag) {
+                  self.updatePointList(event.overlay.getPath());
+                }
+              }
+            );
+            google.maps.event.addListener(
+              paths.getAt(p),
+              'insert_at',
+              () => {
+                self.updatePointList(event.overlay.getPath());
+              }
+            );
+            google.maps.event.addListener(
+              paths.getAt(p),
+              'remove_at',
+              () => {
+                self.updatePointList(event.overlay.getPath());
+              }
+            );
+          }
+          self.updatePointList(event.overlay.getPath());
+          this.selectedShape = event.overlay;
+          this.selectedShape.type = event.type;
+        }
+        if (event.type !== google.maps.drawing.OverlayType.MARKER) {
+          // Switch back to non-drawing mode after drawing a shape.
+          self.drawingManager.setDrawingMode(null);
+          // To hide:
+          self.drawingManager.setOptions({
+            drawingControl: false,
+          });
+        }
+      }
+    );
+  }
+  private setCurrentPosition() {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.lat = position.coords.latitude;
+        this.lng = position.coords.longitude;
+      });
+    }
+  }
+
+  deleteSelectedShape() {
+    if (this.selectedShape) {
+      this.selectedShape.setMap(null);
+      this.selectedArea = 0;
+      this.pointList = [];
+      // To show:
+      this.drawingManager.setOptions({
+        drawingControl: true,
+      });
+    }
+  }
+
+  updatePointList(path) {
+    this.pointList = [];
+    const len = path.getLength();
+    for (let i = 0; i < len; i++) {
+      this.pointList.push(
+        path.getAt(i).toJSON()
+      );
+    }
+    this.selectedArea = google.maps.geometry.spherical.computeArea(
+      path
+    );
   }
 }

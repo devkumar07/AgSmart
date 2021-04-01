@@ -80,12 +80,12 @@ export class ListViewComponent implements OnInit {
           //alert(JSON.stringify(temp))
           for (var i=0; i<temp.length; i++) {
             for(var j = 0; j < temp[i].attributes.activity_fields.length; j++){
-              if(temp[i].attributes.activity_fields[0].farm_name == 'Merced College-Large Blocks' && temp[i].attributes.activity_fields[0].crops.length != 0){
+              if(temp[i].attributes.activity_fields[0].farm_name == 'Merced College-Large Blocks'){
                 if(temp[i].attributes.activity_fields[0].crops.length == 0){
                   filtered.push({
                     field : temp[i].attributes.activity_fields[0].field_name,
-                    crop : temp[i].attributes.activity_fields[0].crops[0].crop_name,
-                    activity : 'N/A',
+                    crop : 'N/A',
+                    activity : temp[i].attributes.title,
                     updated : new Date(temp[i].attributes.updated_at),
                     area : temp[i].attributes.area,
                     hours : temp[i].attributes.activity_inputs[0].total_time,

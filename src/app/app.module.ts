@@ -61,7 +61,8 @@ import { MatInputModule } from '@angular/material/input';
       }
     ]),
     AgmCoreModule.forRoot({
-      apiKey: apiKeys['mapsAPI']
+      apiKey: apiKeys['mapsAPI'],
+      libraries: ['places', 'drawing', 'geometry']
     }),
     BrowserAnimationsModule
   ],

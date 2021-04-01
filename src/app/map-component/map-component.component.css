@@ -1,8 +1,10 @@
 agm-map {
     padding: 2px;
     height: 80vh;
-    width: auto;
 } 
+.main{
+  padding-left: 18%;
+}
 body {
   font-size: .875rem;
 }

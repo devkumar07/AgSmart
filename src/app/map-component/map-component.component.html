@@ -78,6 +78,9 @@
   <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="padding: 20px;">
     <button routerLink ="/dashboard" (click) = "defaultView()" type="button">Map View</button>
     <button (click) = "showListView()" type="button">List View</button>
+    <div class="display-flex">
+      <button mat-stroked-button color="warn" (click)="deleteSelectedShape()">Clear</button>
+    </div>
     <!---
     <input type="file" (change)="onFileChange($event)" multiple="false" />
     -->
@@ -86,7 +89,7 @@
     <button (click) = "increaseSearch()" type="button">Create New Search</button>
     <button (click) = "decreaseSearch()" type="button">Remove Search</button>
   </div>
-  <agm-map *ngIf = "isActive == true" [zoom]= "z" [latitude]="lat" [longitude]="lng" [fullscreenControl]='true' [mapTypeId]="'hybrid'" [mapTypeControl]='true'>
+  <agm-map *ngIf = "isActive == true" [zoom]= "z" [latitude]="lat" [longitude]="lng" [fullscreenControl]='true' [mapTypeId]="'hybrid'" [mapTypeControl]='true' (mapReady)="onMapReady($event)">
     <agm-marker [latitude]="lat" [longitude]="lng">
       <agm-info-window><b>My Home Location</b>
       </agm-info-window>
