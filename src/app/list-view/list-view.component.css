@@ -1,7 +1,7 @@
 .list-view{
-    margin-left: 22%;
-    padding-top: 1.5%;
-    margin-right: 10%;
+    padding-left: 10%;
+    padding-top: auto;
+    padding-right: 10%;
     width: auto;
     height: 80vh;
 }

@@ -3,10 +3,14 @@ agm-map {
     height: 80vh;
 } 
 .main{
-  padding-left: 18%;
+  padding-left: 22%;
+  padding-right: 8%;
 }
 body {
   font-size: .875rem;
+}
+.table{
+  padding-top: auto;
 }
 
 .feather {

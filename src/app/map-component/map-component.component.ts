@@ -247,6 +247,7 @@ export class MapComponentComponent implements OnInit {
         path.getAt(i).toJSON()
       );
     }
+    alert(JSON.stringify(this.pointList))
     this.selectedArea = google.maps.geometry.spherical.computeArea(
       path
     );
