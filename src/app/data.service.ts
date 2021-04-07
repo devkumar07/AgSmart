@@ -9,9 +9,16 @@ export class DataService {
   private isAgsmartLogin = new BehaviorSubject(true);
   private farms = new BehaviorSubject([]);
   private fields = new BehaviorSubject([]);
+  private coord = new BehaviorSubject([]);
+  private FarmLat = new BehaviorSubject([]);
+  private FarmLng = new BehaviorSubject([]);
   currentMessage = this.messageSource.asObservable();
   currentAddress = this.userAddress.asObservable();
   loginPageStatus = this.isAgsmartLogin.asObservable();
+  coordList = this.coord.asObservable();
+  Lat = this.FarmLat.asObservable();
+  Lng = this.FarmLng.asObservable(); 
+
   farmData = this.farms.asObservable();
   fieldData = this.fields.asObservable();
   constructor() { }
@@ -30,5 +37,13 @@ export class DataService {
   }
   sendAgWorldFieldData(message){
     this.fields.next(message)
+  }
+  sendFieldCoord(message){
+    this.coord.next(message)
+    alert('sent data')
+  }
+  sendFarmCoords(message1, message2){
+    this.FarmLat.next(message1)
+    this.FarmLng.next(message2)
   }
 }

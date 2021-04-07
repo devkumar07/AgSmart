@@ -47,6 +47,17 @@ export class MapComponentComponent implements OnInit {
         }
       })
   }
+  filterMapSearch(){
+    alert("button clicked")
+    this.http.get(this.url+'/getagworldFarms')
+      .subscribe(response => {
+      let json_data = response.json()
+      if(json_data['result'] == 'SUCCESS'){
+        this.data.sendFarmCoords(json_data['response_farms'].attributes.location.latitude,json_data['response_farms'].attributes.location.longitude)
+      }
+    });
+    this.data.sendFieldCoord(this.pointList)
+  }
   onMapReady(map) {
     this.initDrawingManager(map);
   }

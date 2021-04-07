@@ -78,6 +78,7 @@
   <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="padding: 20px;">
     <button routerLink ="/dashboard" (click) = "defaultView()" type="button">Map View</button>
     <button (click) = "showListView()" type="button">List View</button>
+    <button (click) = "filterMapSearch()" type="button">Update table</button>
     <div class="display-flex">
       <button mat-stroked-button color="warn" (click)="deleteSelectedShape()">Clear</button>
     </div>

@@ -25,6 +25,7 @@ export class ListViewComponent implements OnInit {
   displayedColumns: string[] = ['Field', 'Crop', 'Activity Name','Last updated','Area','Input Hours'];
   dataSource;
   fields;
+  coordinates;
 
   fieldFilter = new FormControl('');
   cropFilter = new FormControl('');
@@ -67,20 +68,65 @@ export class ListViewComponent implements OnInit {
     }
     return filterFunction;
   }
+  computeMinMaxCoord(farmLat, farmLng){
+    var minLat = 999
+    var minLng = 999
+    var maxLat = -999
+    var maxLng = -999
+    for(var i = 0; i < this.coordinates.length; i++){
+      if(this.coordinates[i]['lat'] < minLat){
+        minLat = this.coordinates[i]['lat']
+      }
+      if(this.coordinates[i]['lng'] < minLng){
+        minLng = this.coordinates[i]['lng']
+      }
+    }
+
+    for(var i = 0; i < this.coordinates.length; i++){
+      if(this.coordinates[i]['lat'] > maxLat){
+        maxLat = this.coordinates[i]['lat']
+      }
+      if(this.coordinates[i]['lng'] > maxLng){
+        maxLng = this.coordinates[i]['lng']
+      }
+    }
+    //alert(minLat+'<'+farmLat+'<'+maxLat)
+    //alert(minLng+'<'+farmLng+'<'+maxLng)
+    if ((minLat <= farmLat && farmLat <=maxLat) && (minLng <= farmLng && farmLng <= maxLng)){
+      return true
+    }
+    return false
+  }
 
   ngOnInit(): void {
     let temp = []
     let filtered = []
+    let farmLat;
+    let farmLng;
+    let withinRange
+    
+    this.data.coordList.subscribe(message => this.coordinates = message)
+    this.data.Lat.subscribe(message => farmLat = message)
+    this.data.Lng.subscribe(message => farmLng = message)
 
+    if(this.coordinates.length == 0){
+      withinRange = true
+      //alert('it is empty')
+    } 
+    else{
+      withinRange = this.computeMinMaxCoord(farmLat,farmLng)
+      //alert('it is filled')
+    }
+    setTimeout(() => { this.ngOnInit() }, 1000 * 1)
     this.http.get(this.url+'/getagworldFields')
       .subscribe(response => {
         let json_data = response.json()
         if (json_data['result'] == 'SUCCESS'){
           temp = json_data['response_fields']
-          //alert(JSON.stringify(temp))
+          //alert(withinRange)
           for (var i=0; i<temp.length; i++) {
             for(var j = 0; j < temp[i].attributes.activity_fields.length; j++){
-              if(temp[i].attributes.activity_fields[0].farm_name == 'Merced College-Large Blocks'){
+              if(temp[i].attributes.activity_fields[0].farm_name == 'Merced College-Large Blocks' && withinRange == true){
                 if(temp[i].attributes.activity_fields[0].crops.length == 0){
                   filtered.push({
                     field : temp[i].attributes.activity_fields[0].field_name,
@@ -159,6 +205,7 @@ export class ListViewComponent implements OnInit {
           this.dataSource.filter = JSON.stringify(this.filterValues);
         }
       )
+      
   }
   constructor(private data: DataService, private http: Http) { 
     

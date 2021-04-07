@@ -43,6 +43,7 @@ def get_session():
                 response = requests.get('https://us.agworld.co/user_api/v1/farms/120061',headers = headers,auth=HTTPBasicAuth(agworldUsername, agworldPassword))
                 t = response.json()
                 t = t['data']
+                #print(json.dumps(t))
                 response = requests.get('https://us.agworld.co/user_api/v1/fields?filter[farm_id]=120061&season_id=163976',headers = headers,auth=HTTPBasicAuth(agworldUsername, agworldPassword))
                 d = response.json()
                 d = d['data']
