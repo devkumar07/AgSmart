@@ -3,7 +3,8 @@
     padding-top: auto;
     padding-right: 10%;
     width: auto;
-    height: 80vh;
+    height: auto;
+    overflow: hidden;
 }
 .mat-table {
     display: table;

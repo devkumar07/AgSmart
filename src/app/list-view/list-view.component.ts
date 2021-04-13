@@ -24,7 +24,7 @@ export class AgData {
 export class ListViewComponent implements OnInit {
   displayedColumns: string[] = ['Field', 'Crop', 'Activity Name','Last updated','Area','Input Hours'];
   dataSource;
-  fields;
+  fields = [];
   coordinates;
 
   fieldFilter = new FormControl('');
@@ -108,6 +108,8 @@ export class ListViewComponent implements OnInit {
     this.data.coordList.subscribe(message => this.coordinates = message)
     this.data.Lat.subscribe(message => farmLat = message)
     this.data.Lng.subscribe(message => farmLng = message)
+    this.data.cachedList.subscribe(message => this.fields = message)
+    //alert(this.fields)
 
     if(this.coordinates.length == 0){
       withinRange = true
@@ -117,51 +119,54 @@ export class ListViewComponent implements OnInit {
       withinRange = this.computeMinMaxCoord(farmLat,farmLng)
       //alert('it is filled')
     }
-    setTimeout(() => { this.ngOnInit() }, 1000 * 1)
-    this.http.get(this.url+'/getagworldFields')
-      .subscribe(response => {
-        let json_data = response.json()
-        if (json_data['result'] == 'SUCCESS'){
-          temp = json_data['response_fields']
-          //alert(withinRange)
-          for (var i=0; i<temp.length; i++) {
-            for(var j = 0; j < temp[i].attributes.activity_fields.length; j++){
-              if(temp[i].attributes.activity_fields[0].farm_name == 'Merced College-Large Blocks' && withinRange == true){
-                if(temp[i].attributes.activity_fields[0].crops.length == 0){
-                  filtered.push({
-                    field : temp[i].attributes.activity_fields[0].field_name,
-                    crop : 'N/A',
-                    activity : temp[i].attributes.title,
-                    updated : new Date(temp[i].attributes.updated_at),
-                    area : temp[i].attributes.area,
-                    hours : temp[i].attributes.activity_inputs[0].total_time,
-                  })
-                }
-                else{
-                  for(var y = 0; y < temp[i].attributes.activity_fields[0].crops.length; y++){
+    setTimeout(() => { this.ngOnInit() }, 1000 * 10)
+    if(this.fields.length == 0){
+      this.http.get(this.url+'/getagworldFields')
+        .subscribe(response => {
+          let json_data = response.json()
+          if (json_data['result'] == 'SUCCESS'){
+            temp = json_data['response_fields']
+            //alert(withinRange)
+            for (var i=0; i<temp.length; i++) {
+              for(var j = 0; j < temp[i].attributes.activity_fields.length; j++){
+                if(temp[i].attributes.activity_fields[0].farm_name == 'Merced College-Large Blocks' && withinRange == true){
+                  if(temp[i].attributes.activity_fields[0].crops.length == 0){
                     filtered.push({
                       field : temp[i].attributes.activity_fields[0].field_name,
-                      crop : temp[i].attributes.activity_fields[0].crops[0].crop_name,
+                      crop : 'N/A',
                       activity : temp[i].attributes.title,
                       updated : new Date(temp[i].attributes.updated_at),
                       area : temp[i].attributes.area,
                       hours : temp[i].attributes.activity_inputs[0].total_time,
                     })
                   }
+                  else{
+                    for(var y = 0; y < temp[i].attributes.activity_fields[0].crops.length; y++){
+                      filtered.push({
+                        field : temp[i].attributes.activity_fields[0].field_name,
+                        crop : temp[i].attributes.activity_fields[0].crops[0].crop_name,
+                        activity : temp[i].attributes.title,
+                        updated : new Date(temp[i].attributes.updated_at),
+                        area : temp[i].attributes.area,
+                        hours : temp[i].attributes.activity_inputs[0].total_time,
+                      })
+                    }
+                  }
                 }
               }
             }
+            this.fields = filtered
+            this.data.cacheFields(filtered)
+            //alert(JSON.stringify(this.dataSource))
           }
-          this.fields = filtered
-          this.dataSource = new MatTableDataSource(filtered);
-          this.dataSource.filterPredicate = this.createFilter();
-          this.dataSource.paginator = this.paginator;
-          //alert(JSON.stringify(this.dataSource))
-        }
-        else{
-          alert('failed')
-        }
-    });
+          else{
+            alert('failed')
+          }
+      });
+    }
+    this.dataSource = new MatTableDataSource(this.fields);
+    this.dataSource.filterPredicate = this.createFilter();
+    this.dataSource.paginator = this.paginator;
     this.pipe = new DatePipe('en');
     this.fieldFilter.valueChanges
      .subscribe(

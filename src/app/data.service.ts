@@ -12,12 +12,15 @@ export class DataService {
   private coord = new BehaviorSubject([]);
   private FarmLat = new BehaviorSubject([]);
   private FarmLng = new BehaviorSubject([]);
+  private listViewFields = new BehaviorSubject([]);
+
   currentMessage = this.messageSource.asObservable();
   currentAddress = this.userAddress.asObservable();
   loginPageStatus = this.isAgsmartLogin.asObservable();
   coordList = this.coord.asObservable();
   Lat = this.FarmLat.asObservable();
   Lng = this.FarmLng.asObservable(); 
+  cachedList = this.listViewFields.asObservable();
 
   farmData = this.farms.asObservable();
   fieldData = this.fields.asObservable();
@@ -45,5 +48,8 @@ export class DataService {
   sendFarmCoords(message1, message2){
     this.FarmLat.next(message1)
     this.FarmLng.next(message2)
+  }
+  cacheFields(message){
+    this.listViewFields.next(message);
   }
 }
